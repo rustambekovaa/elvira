@@ -1,3 +1,8 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Элмира · Кыз узатуу</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -221,7 +226,21 @@
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
   @media (min-width:480px){.choice-row{flex-direction:row}.choice{flex:1}}
   @media (max-width:430px){.hero .corner{width:88px}}
+
+  /* --- mobile tuning --- */
+  @media (max-width:600px){
+    .wrap{padding-inline:18px}
+    .hero{padding:44px 18px 52px;min-height:600px}
+    .hero-frame{padding:44px 22px;border-radius:150px/210px}
+    .bride-name{font-size:clamp(52px,15vw,88px)}
+  }
+  @media (max-width:380px){
+    .count-grid{gap:8px}
+    .cbox{min-width:62px;padding:13px 8px 10px}
+  }
 </style>
+</head>
+<body>
 
 <button class="music-btn" id="musicBtn" aria-label="Музыканы күйгүзүү/өчүрүү" title="Музыка">
   <span class="ring"></span>
@@ -229,8 +248,8 @@
     <path d="M9 18V5l10-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/>
   </svg>
 </button>
-<audio id="bgm" loop preload="none">
-<source src="./Жазира Байырбекова - Қыз ұзату жыры (kzmp3.kz).mp3" type="audio/mpeg">
+<audio id="bgm" loop preload="auto">
+<source src="./music.mp3" type="audio/mpeg">
 </audio>
 
 <!-- HERO -->
@@ -529,8 +548,15 @@ renderWishes(false);
   const muted='<path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M22 9l-6 6M16 9l6 6"/>';
   btn.addEventListener('click', function(){
     on=!on;
-    if(on){ const pr=audio.play(); if(pr&&pr.catch) pr.catch(()=>{}); btn.classList.add('playing'); icon.innerHTML=muted; }
-    else{ audio.pause(); btn.classList.remove('playing'); icon.innerHTML=note; }
+    if(on){
+      const pr=audio.play();
+      if(pr&&pr.catch) pr.catch(function(){ on=false; btn.classList.remove('playing'); icon.innerHTML=note; });
+      btn.classList.add('playing'); icon.innerHTML=muted;
+    } else {
+      audio.pause(); btn.classList.remove('playing'); icon.innerHTML=note;
+    }
   });
 })();
 </script>
+</body>
+</html>
